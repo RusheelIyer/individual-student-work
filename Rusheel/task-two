@@ -1,0 +1,283 @@
+
+public abstract class FootballTeam {
+	
+	public String teamName;
+	public String squadLocation;
+	
+	public FootballTeam(String teamName, String squadLocation){
+		this.teamName = teamName;
+		this.squadLocation = squadLocation;
+		}
+	
+
+}
+
+
+
+public class PremierLeagueTeam extends FootballTeam {
+	
+	public PremierLeagueTeam(String teamName, String squadLocation){
+		super(teamName, squadLocation);
+	}
+
+	
+}
+
+
+
+public class ChampionshipLeagueTeam extends FootballTeam {
+	
+	public ChampionshipLeagueTeam(String teamName, String squadLocation){
+		super(teamName, squadLocation);
+	}
+
+	
+}
+
+
+
+public abstract class FootballResult {
+	
+	String result;
+	FootballTeam one;
+	FootballTeam two;
+	
+	public FootballResult(FootballTeam one, FootballTeam two, String result){
+		this.result = result;
+		this.one = one;
+		this.two = two;
+	}
+	
+	public FootballResult(FootballTeam one, FootballTeam two){
+		this(one, two, "0-0");
+	}
+}
+
+
+
+public class leagueResult extends FootballResult{
+	
+	int weekNumber;
+	
+	public leagueResult( FootballTeam one, FootballTeam two , String result, int weekNumber){
+		super(one, two, result);
+		this.weekNumber = weekNumber;
+	}
+	
+	public leagueResult(FootballTeam one, FootballTeam two){
+		this(one, two, "0-0", 1);
+	}
+
+}
+
+
+
+public class cupResult extends FootballResult{
+	
+	int roundNumber;
+	
+	public cupResult( FootballTeam one, FootballTeam two , String result, int roundNumber){
+		super(one, two, result);
+		this.roundNumber = roundNumber;
+	}
+	
+	public cupResult(FootballTeam one, FootballTeam two){
+		this(one, two, "0-0", 1);
+	}
+	
+	
+
+}
+
+
+import java.util.Scanner;
+
+
+public class FootballLeague {
+	
+	
+	public static void main(String[] args) {
+		
+	FootballTeam one = new PremierLeagueTeam("Chelsea Football Club F.C", "London");
+	FootballTeam two = new PremierLeagueTeam("Manchester United", "Manchester");
+	FootballTeam three = new PremierLeagueTeam("Manchester City", "Manchester");
+	FootballTeam four = new PremierLeagueTeam("Arsenal F.C", "London");
+	FootballTeam five = new PremierLeagueTeam("Liverpool F.C", "Liverpool");
+	FootballTeam six = new PremierLeagueTeam("West Ham F.C", "London");
+	
+	FootballTeam[] premiership = {one, two, three, four, five, six};
+	
+	for(int i = 0; i < premiership.length; i++){
+		System.out.println(premiership[i].teamName);
+	}
+	
+	FootballTeam cOne = new ChampionshipLeagueTeam("AFC Bournemouth","Bournemouth");
+	FootballTeam cTwo = new ChampionshipLeagueTeam("Derby County","Derby");
+	FootballTeam cThree = new ChampionshipLeagueTeam("Middlesborough","Middlesborough");
+	FootballTeam cFour = new ChampionshipLeagueTeam("Ipswich Town","Ipswich");
+	FootballTeam cFive = new ChampionshipLeagueTeam("Brentford","Brentford");
+	FootballTeam cSix = new ChampionshipLeagueTeam("Watford", "Watford");
+	
+	FootballTeam[] championship = {cOne, cTwo, cThree, cFour, cFive, cSix};
+		
+	for(int i = 0; i < championship.length; i++){
+		System.out.println(championship[i].teamName);
+	}
+	
+	//Cups
+	//Round 1
+	
+	FootballResult match1 = new cupResult(cOne, three);
+	FootballResult match2 = new cupResult(cTwo, four);
+	FootballResult match3 = new cupResult(cFive, six);
+	
+	FootballResult match4 = new cupResult(one, cThree);
+	FootballResult match5 = new cupResult(two, cFour);
+	FootballResult match6 = new cupResult(five, cSix);
+	
+	//Round 2
+	
+	FootballResult match12 = new cupResult(one, four, "3-1", 2);
+	FootballResult match22 = new cupResult(cOne, cFour, "1-2", 2);
+	FootballResult match32 = new cupResult(cFive, cSix, "0-1", 2);
+	
+	//Leagues
+	//Week 1
+	
+	FootballResult league1 = new leagueResult(one, three);
+	FootballResult league2 = new leagueResult(two, four);
+	FootballResult league3 = new leagueResult(five, six);
+	
+	FootballResult league4 = new leagueResult(cOne, cThree);
+	FootballResult league5 = new leagueResult(cTwo, cFour);
+	FootballResult league6 = new leagueResult(cFive, cSix);
+	
+	//Week 2
+	
+	FootballResult league12 = new leagueResult(one, two, "5-4" , 2);
+	FootballResult league22 = new leagueResult(five, four, "0-0" , 2 );
+	FootballResult league32 = new leagueResult(three, six,"0-0" , 2);
+	
+	FootballResult league42 = new leagueResult(cOne, cTwo, "1-0" , 2);
+	FootballResult league52 = new leagueResult(cFive, cFour, "2-0" , 2);
+	FootballResult league62 = new leagueResult(cThree, cSix, "3-0" , 2);
+	
+	System.out.println("Do you want to see the results for the: Cup or the League?");
+	Scanner s = new Scanner(System.in);
+	String type = s.nextLine();
+	
+	if(type.equals("cup") || type.equals("Cup")){
+		
+		System.out.println("Which round? - 1 or 2?");
+		int round = s.nextInt();
+		
+		if(round == 1){
+		
+		System.out.println("Which match do you want to see the results for?");
+		System.out.println("1)	" + cOne.teamName + " - " + three.teamName);
+		System.out.println("2)	" + cTwo.teamName + " - " + four.teamName);
+		System.out.println("3)	" + cFive.teamName + " - " + six.teamName);
+		
+		System.out.println("4)	" + one.teamName + " - " + cThree.teamName);
+		System.out.println("5)	" + two.teamName + " - " + cFour.teamName);
+		System.out.println("6)	" + five.teamName + " - " + cSix.teamName);
+		
+		int match = s.nextInt();
+		
+		if(match == 1){
+			System.out.println(match1.result);
+		}else if (match == 2){
+			System.out.println(match2.result);
+		}else if (match == 3){
+			System.out.println(match3.result);
+		}else if (match == 4){
+			System.out.println(match4.result);
+		}else if (match == 5){
+			System.out.println(match5.result);
+		}else if (match == 6){
+			System.out.println(match6.result);
+		}
+		} else if(round == 2){
+			
+			System.out.println("Which match do you want to see the results for?");
+			
+			System.out.println("1)	" + one.teamName + " - " + four.teamName);
+			System.out.println("2)	" + cOne.teamName + " - " + cFour.teamName);
+			System.out.println("3)	" + cFive.teamName + " - " + cSix.teamName);
+			
+			int round2 = s.nextInt();
+			
+			if(round2 == 1){
+				System.out.println(match12.result);
+			} else if (round2 == 2){
+				System.out.println(match22.result);
+			} else if(round2 == 3){
+				System.out.println(match32.result);
+			}
+			
+		}
+		
+		
+	} else if (type.equals("league") || type.equals("League")){
+		
+		System.out.println("Which week? 1 or 2?");
+		
+		int week = s.nextInt();
+		
+		if(week == 1){
+			System.out.println("Which match? ");
+			System.out.println("1)	" + one.teamName + " - " + three.teamName);
+			System.out.println("2)	" + two.teamName + " - " + four.teamName);
+			System.out.println("3)	" + five.teamName + " - " + six.teamName);
+			
+			System.out.println("4)	" + cOne.teamName + " - " + cThree.teamName);
+			System.out.println("5)	" + cTwo.teamName + " - " + cFour.teamName);
+			System.out.println("6)	" + cFive.teamName + " - " + cSix.teamName);
+			
+			int match = s.nextInt();
+			
+			if(match == 1){
+				System.out.println(league1.result);
+			}else if (match == 2){
+				System.out.println(league2.result);
+			}else if (match == 3){
+				System.out.println(league3.result);
+			}else if (match == 4){
+				System.out.println(league4.result);
+			}else if (match == 5){
+				System.out.println(league5.result);
+			}else if (match == 6){
+				System.out.println(league6.result);
+			}
+		}	else if(week == 2){
+			
+			System.out.println("Which match?");
+			System.out.println("1)	" + one.teamName + " - " + two.teamName);
+			System.out.println("2)	" + five.teamName + " - " + four.teamName);
+			System.out.println("3)	" + three.teamName + " - " + six.teamName);
+			
+			System.out.println("4)	" + cOne.teamName + " - " + cTwo.teamName);
+			System.out.println("5)	" + cFive.teamName + " - " + cFour.teamName);
+			System.out.println("6)	" + cThree.teamName + " - " + cSix.teamName);
+			
+			int match = s.nextInt();
+			
+			if(match == 1){
+				System.out.println(league12.result);
+			}else if (match == 2){
+				System.out.println(league22.result);
+			}else if (match == 3){
+				System.out.println(league32.result);
+			}else if (match == 4){
+				System.out.println(league42.result);
+			}else if (match == 5){
+				System.out.println(league52.result);
+			}else if (match == 6){
+				System.out.println(league62.result);
+			}
+			
+		}
+	}
+	}
+
+}
