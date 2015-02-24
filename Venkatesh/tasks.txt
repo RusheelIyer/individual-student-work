@@ -1,0 +1,9 @@
+===Venkatesh===
+
+Weaknesses:
+* Comments
+* Exceptions
+
+==Task One==
+Create a program to read a filename from the command line, open it and parse the results. The file is a csv-formatted file in the format: name,email,comment.
+Create a well-commented and reboust program that will handle missing files, incorrect syntax, missing parts etc. Folder name: task-one-user-comments

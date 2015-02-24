@@ -1,0 +1,126 @@
+public abstract class FootballTeam {
+	
+	public String teamName;
+	public String squadLocation;
+	
+	public FootballTeam(String teamName, String squadLocation){
+		this.teamName = teamName;
+		this.squadLocation = squadLocation;
+		}
+	
+
+}
+
+
+public class PremierLeagueTeam extends FootballTeam {
+	
+	public PremierLeagueTeam(String teamName, String squadLocation){
+		super(teamName, squadLocation);
+	}
+
+	
+}
+
+
+
+public class ChampionshipLeagueTeam extends FootballTeam {
+	
+	public ChampionshipLeagueTeam(String teamName, String squadLocation){
+		super(teamName, squadLocation);
+	}
+
+	
+}
+
+
+
+public class FootballResult {
+	
+	String result;
+	FootballTeam one;
+	FootballTeam two;
+	
+	public FootballResult(FootballTeam one, FootballTeam two, String result){
+		this.result = result;
+		this.one = one;
+		this.two = two;
+	}
+	
+	public FootballResult(FootballTeam one, FootballTeam two){
+		this(one, two, "0-0");
+	}
+}
+
+
+import java.util.Scanner;
+
+
+public class FootballLeague {
+	
+	
+	public static void main(String[] args) {
+		
+	FootballTeam one = new PremierLeagueTeam("Chelsea Football Club F.C", "London");
+	FootballTeam two = new PremierLeagueTeam("Manchester United", "Manchester");
+	FootballTeam three = new PremierLeagueTeam("Manchester City", "Manchester");
+	FootballTeam four = new PremierLeagueTeam("Arsenal F.C", "London");
+	FootballTeam five = new PremierLeagueTeam("Liverpool F.C", "Liverpool");
+	FootballTeam six = new PremierLeagueTeam("West Ham F.C", "London");
+	
+	FootballTeam[] premiership = {one, two, three, four, five, six};
+	
+	for(int i = 0; i < premiership.length; i++){
+		System.out.println(premiership[i].teamName);
+	}
+	
+	FootballTeam cOne = new ChampionshipLeagueTeam("AFC Bournemouth","Bournemouth");
+	FootballTeam cTwo = new ChampionshipLeagueTeam("Derby County","Derby");
+	FootballTeam cThree = new ChampionshipLeagueTeam("Middlesborough","Middlesborough");
+	FootballTeam cFour = new ChampionshipLeagueTeam("Ipswich Town","Ipswich");
+	FootballTeam cFive = new ChampionshipLeagueTeam("Brentford","Brentford");
+	FootballTeam cSix = new ChampionshipLeagueTeam("Watford", "Watford");
+	
+	FootballTeam[] championship = {cOne, cTwo, cThree, cFour, cFive, cSix};
+		
+	for(int i = 0; i < championship.length; i++){
+		System.out.println(championship[i].teamName);
+	}
+	
+	FootballResult match1 = new FootballResult(one, three, "1-1");
+	FootballResult match2 = new FootballResult(two, four);
+	FootballResult match3 = new FootballResult(five, six, "1-0");
+	
+	FootballResult match4 = new FootballResult(cOne, cThree, "1-4");
+	FootballResult match5 = new FootballResult(cTwo, cFour, "3-2");
+	FootballResult match6 = new FootballResult(cFive, cSix);
+	
+	
+	System.out.println("Which match do you want to know the result of: ");
+	System.out.println("1 - " + one.teamName + " - " + three.teamName);
+	System.out.println("2 - " + two.teamName + " - " + four.teamName);
+	System.out.println("3 - " + five.teamName + " - " + six.teamName);
+	
+	System.out.println("4 - " + cOne.teamName + " - " + cThree.teamName);
+	System.out.println("5 - " + cTwo.teamName + " - " + cFour.teamName);
+	System.out.println("6 - " + cFive.teamName + " - " + cSix.teamName);
+	
+	Scanner s = new Scanner(System.in);
+	int team = s.nextInt();
+	
+	if(team == 1){
+		System.out.println(match1.result);
+	}else if (team == 2){
+		System.out.println(match2.result);
+	}else if (team == 3){
+		System.out.println(match3.result);
+	}else if (team == 4){
+		System.out.println(match4.result);
+	}else if (team == 5){
+		System.out.println(match5.result);
+	}else if (team == 6){
+		System.out.println(match6.result);
+	}
+	
+	}
+
+}

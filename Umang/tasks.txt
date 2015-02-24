@@ -1,0 +1,10 @@
+===Umang's Tasks===
+
+Weaknesses:
+* Constructors
+* Working with files
+* Object designs
+* Public/private keywords
+
+==Task One - Visibility==
+In the task-one-visibility folder there is code written in the main function. Your task is to get the code working without changing any code in the main()
