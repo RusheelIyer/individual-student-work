@@ -1,0 +1,82 @@
+import java.util.*;
+
+public class Suits {
+	
+	public String card;
+	public int value;
+	
+	public Suits(String card, int value){
+		
+		this.card = card;
+		this.value = value;
+		
+	}
+
+}
+
+import java.util.LinkedList;
+import java.util.Random;
+
+public class Game {
+	
+	public static void main(String[] args) {
+		
+	Suits ace = new Suits("ace", 11);
+	Suits two = new Suits("two", 2);
+	Suits three = new Suits("three", 3);
+	Suits four = new Suits("four", 4);
+	Suits five = new Suits("five", 5);
+	Suits six = new Suits("six", 6);
+	Suits seven = new Suits("seven", 7);
+	Suits eight = new Suits("eight", 8);
+	Suits nine = new Suits("nine", 9);
+	Suits ten = new Suits("ten", 10);
+	Suits jack = new Suits("jack", 10);
+	Suits queen = new Suits("queen", 10);
+	Suits king = new Suits("king", 10);
+	
+	Suits[] Suits = {ace, two, three, four, five, six, seven, eight, nine, ten, jack, queen, king}; 
+	
+	Random cardGenerator = new Random();
+	
+	LinkedList player = new LinkedList(); 
+	
+	Suits x = Suits[cardGenerator.nextInt(12)];
+	player.add(x.card);
+	Suits y = Suits[cardGenerator.nextInt(12)];
+	player.add(y.card);
+	
+	int playerValue = x.value + y.value;
+	
+	System.out.println("Player" + " -> "+ player + " = " + playerValue);
+	
+	
+	LinkedList dealer = new LinkedList();
+	
+	Suits m = Suits[cardGenerator.nextInt(12)];
+	dealer.add(m.card);
+	Suits n = Suits[cardGenerator.nextInt(12)];
+	dealer.add(n.card);
+	
+	int dealerValue = m.value + n.value;
+	
+	System.out.println("\nDealer" + " -> " + dealer + " = " + dealerValue);
+	
+	if((21-playerValue) > (21-dealerValue)){
+		
+		System.out.println("\nDealer Wins!");
+		
+	}else if((21-playerValue) == (21-dealerValue)){
+		
+		System.out.println("\nPush");
+		
+	}else if((21-playerValue) < (21-dealerValue)){
+		
+		System.out.println("\nPlayer Wins!");
+		
+		
+	}
+	
+	}
+
+}
