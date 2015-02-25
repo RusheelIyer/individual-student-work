@@ -14,8 +14,11 @@ public class Suits {
 
 }
 
+package BlackJack;
+
 import java.util.LinkedList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Game {
 	
@@ -50,33 +53,82 @@ public class Game {
 	
 	System.out.println("Player" + " -> "+ player + " = " + playerValue);
 	
-	
 	LinkedList dealer = new LinkedList();
 	
 	Suits m = Suits[cardGenerator.nextInt(12)];
 	dealer.add(m.card);
 	Suits n = Suits[cardGenerator.nextInt(12)];
-	dealer.add(n.card);
 	
 	int dealerValue = m.value + n.value;
 	
-	System.out.println("\nDealer" + " -> " + dealer + " = " + dealerValue);
+	System.out.println("Dealer -> " + dealer);
 	
-	if((21-playerValue) > (21-dealerValue)){
+	if(playerValue != 21 && dealerValue != 21){
 		
-		System.out.println("\nDealer Wins!");
+		System.out.println("\n\t*Bear in mind that aces value is 11*\n");
+		System.out.println("Do you want to stick or hit?");
 		
-	}else if((21-playerValue) == (21-dealerValue)){
+		Scanner playOn = new Scanner(System.in);
+		String stickOrHit = playOn.nextLine();
 		
-		System.out.println("\nPush");
+		if(stickOrHit.equals("stick") || stickOrHit.equals("Stick")){
+			dealer.add(n.card);
+			System.out.println("Dealer -> " + dealer + " = " + dealerValue);
+			
+			if((21-playerValue) > (21-dealerValue)){
+				System.out.println("\nDealer Wins!");
+			}else if((21-playerValue) == (21-dealerValue)){
+				System.out.println("\nPush");
+			}else if((21-playerValue) < (21-dealerValue)){
+				System.out.println("\nPlayer Wins!");
+			}
 		
-	}else if((21-playerValue) < (21-dealerValue)){
+		}else if(stickOrHit.equals("Hit") || stickOrHit.equals("hit")){
+			
+			Suits z = Suits[cardGenerator.nextInt(12)];
+			player.add(z.card);
+			int  playerValue1 = playerValue + z.value;
+			
+			dealer.add(n.card);
+			Suits o = Suits[cardGenerator.nextInt(12)];
+			int dealerValue1 = dealerValue + o.value;
+			
+			if(playerValue1 > 21 && dealerValue1 <= 21){
+				dealer.add(o.card);
+				System.out.println(player + "\n" + dealer);
+				System.out.println("\nPlayer Bust! --- Dealer Wins!");
+			}else if(playerValue1 <= 21 && dealerValue > 21){
+				dealer.add(o.card);
+				System.out.println(player + "\n" + dealer);
+				System.out.println("\nDealer Bust! --- Player Wins!");
+			}else if(playerValue1 > 21 && dealerValue1 > 21){
+				dealer.add(o.card);
+				System.out.println("\nBoth Bust! --- Push!");
+			}else if(playerValue1 <= 21 && dealerValue1 <= 21){
+				dealer.add(o.card);
+				if((21-playerValue1) > (21-dealerValue1)){
+					System.out.println(player + "\n" + dealer + "\n" + "\nDealer Wins!");
+				}else if((21-playerValue1) == (21-dealerValue1)){
+					System.out.println(player + "\n" + dealer + "\n" + "\nPush");
+				}else if((21-playerValue1) < (21-dealerValue1)){
+					System.out.println(player + "\n" + dealer + "\n" + "\nPlayer Wins!");
+				}
+			}
 		
-		System.out.println("\nPlayer Wins!");
-		
-		
+		}
+			
+			
+		}else if(dealerValue != 21 && playerValue == 21){
+			dealer.add(n.card);
+			System.out.println(dealer + "\nPlayer Wins!");
+		}else if(dealerValue == 21 && playerValue != 21){
+			dealer.add(n.card);
+			System.out.println(dealer + "\nDealer Wins!");
+		}else if(dealerValue ==21 && playerValue == 21){
+			dealer.add(n.card);
+			System.out.println(dealer + "\nPush");
+		}
 	}
 	
-	}
 
 }
