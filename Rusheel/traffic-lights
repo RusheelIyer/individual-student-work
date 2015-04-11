@@ -1,0 +1,83 @@
+import java.util.ArrayList;
+
+
+public class Light {
+	
+	public static void wait60Seconds(){
+		
+		long time = System.currentTimeMillis();
+		
+		while(true){
+			
+			long currentTime = System.currentTimeMillis();
+			long elapsedTime = currentTime - time;
+			
+			if(elapsedTime >= 60000){
+				break;
+			}else{
+				continue;
+			}
+			
+		}
+		
+	}
+	
+	public static void wait30seconds(){
+		
+		long time = System.currentTimeMillis();
+		
+		while(true){
+			
+			long currentTime = System.currentTimeMillis();
+			long elapsedTime = currentTime - time;
+			
+			if(elapsedTime >= 30000){
+				break;
+			}else{
+				continue;
+			}
+			
+		}
+		
+	}
+	
+	public static void wait5seconds(){
+		
+		long time = System.currentTimeMillis();
+		
+		while(true){
+			
+			long currentTime = System.currentTimeMillis();
+			long elapsedTime = currentTime - time;
+			
+			if(elapsedTime >= 5000){
+				break;
+			}else{
+				continue;
+			}
+			
+		}
+		
+	}
+	
+	public static void main(String[] args) {
+		
+		ArrayList<String> lights = new ArrayList<String>();
+		
+		lights.add("Red Light - Cars Stop - Pedestrians cross");
+		lights.add("Amber - Cars Cross, if you can not stop safely - Pedestrians do not cross");
+		lights.add("Green - Cars Cross - Pedestrians do not cross");
+		
+		while(true){
+			
+			System.out.println(lights.get(0));
+			wait60Seconds();
+			System.out.println(lights.get(1));
+			wait5seconds();
+			System.out.println(lights.get(2) + "\n");
+			wait60Seconds();
+		}
+		
+	}
+
+}
