@@ -1,0 +1,2239 @@
+package CSVData;
+
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+
+public class FirstOption {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FirstOption window = new FirstOption();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public static void FirstOption() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					FirstOption window = new FirstOption();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	/**
+	 * Create the application.
+	 */
+	public FirstOption() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.DARK_GRAY);
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JButton btnPlayTheGame = new JButton("Play the Game");
+		btnPlayTheGame.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnPlayTheGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Frame1 come = new Frame1();
+				come.Frame1();
+				
+			}
+		});
+		btnPlayTheGame.setBounds(111, 47, 225, 75);
+		frame.getContentPane().add(btnPlayTheGame);
+		
+		JButton btnPlayerInformation = new JButton("Player Information");
+		btnPlayerInformation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Information move = new Information();
+				move.Information();
+				
+			}
+		});
+		btnPlayerInformation.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnPlayerInformation.setBounds(111, 140, 225, 75);
+		frame.getContentPane().add(btnPlayerInformation);
+	}
+}
+
+package CSVData;
+
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.JFrame;
+
+import java.awt.CardLayout;
+
+import javax.swing.JPanel;
+
+import java.awt.Color;
+
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import javax.swing.JTextField;
+import javax.swing.JButton;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JRadioButton;
+
+public class Information {
+
+	private JFrame frame;
+	private JTextField textField;
+	private JPanel panel;
+	private JPanel panel_1;
+	
+	/**
+	 * Launch the application.
+	 */
+	public static void Information() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Information window = new Information();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Information() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		
+		PlayerData data = new PlayerData();
+		data.loadDataFromFile("/Users/RusheelIyer/Desktop/Data.csv");
+		
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(new CardLayout(0, 0));
+		
+		final JPanel panel = new JPanel();
+		panel.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel, "name_47856221983511");
+		panel.setLayout(null);
+		panel.setVisible(true);
+		
+		final JPanel panel_1 = new JPanel();
+		panel_1.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_1, "name_48070864161784");
+		panel_1.setLayout(null);
+		
+		JLabel lblWhatWouldYou = new JLabel("What would you like to know?");
+		lblWhatWouldYou.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWhatWouldYou.setForeground(Color.WHITE);
+		lblWhatWouldYou.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		lblWhatWouldYou.setBounds(88, 6, 260, 16);
+		panel_1.add(lblWhatWouldYou);
+		panel_1.setVisible(false);
+		
+		JLabel lblNewLabel = new JLabel("Enter the Name Of the Player You Would Like To Search For:");
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		lblNewLabel.setBounds(46, 68, 354, 16);
+		panel.add(lblNewLabel);
+		
+		textField = new JTextField();
+		textField.setBounds(56, 96, 344, 28);
+		panel.add(textField);
+		textField.setColumns(10);
+		
+		JButton btnSearch = new JButton("Search");
+		btnSearch.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String userInput = textField.getText().toLowerCase();
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getName(i).toLowerCase().contains(userInput)){
+						continue;
+					}else{
+						data.remove(i);
+					}
+					
+					
+				}
+				
+				if((data.size()) == 0){
+					String name = data.getName(0);
+					JOptionPane.showConfirmDialog(null, "Are you looking for " + name);
+					
+					panel_1.setVisible(true);
+					panel.setVisible(false);
+				}else if(data.size() > 0){
+					JOptionPane.showMessageDialog(null, "Please Enter the Full Name of the Player");
+				}else{
+					JOptionPane.showMessageDialog(null, "I could not find the player you are looking for");
+				}
+				
+			}
+		});
+		btnSearch.setBounds(162, 191, 117, 29);
+		panel.add(btnSearch);
+		
+		JButton btnBack_1 = new JButton("Back");
+		btnBack_1.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnBack_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				FirstOption move = new FirstOption();
+				move.FirstOption();
+				
+			}
+		});
+		btnBack_1.setBounds(6, 243, 117, 29);
+		panel.add(btnBack_1);
+		
+		JButton btnAge = new JButton("Age");
+		btnAge.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String name = data.getName(0);
+				int age = data.getAge(0);
+				JOptionPane.showMessageDialog(null,name + " is " + age + " years old");
+				
+			}
+		});
+		btnAge.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnAge.setBounds(53, 54, 140, 29);
+		panel_1.add(btnAge);
+		
+		JButton btnNationality = new JButton("Nation");
+		btnNationality.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String name = data.getName(0);
+				String nation = data.getNationality(0);
+				JOptionPane.showMessageDialog(null,name + " is from " + nation);
+				
+			}
+		});
+		btnNationality.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNationality.setBounds(261, 54, 140, 29);
+		panel_1.add(btnNationality);
+		
+		JButton btnPreferredFoot = new JButton("Preferred Foot");
+		btnPreferredFoot.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String name = data.getName(0);
+				String preferredFoot = data.getFoot(0);
+				if(preferredFoot.equalsIgnoreCase("l")){
+					preferredFoot = "Left";
+				}else{
+					preferredFoot = "Right";
+				}
+				JOptionPane.showMessageDialog(null,name + " prefers his " + preferredFoot + " foot");
+				
+			}
+		});
+		btnPreferredFoot.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnPreferredFoot.setBounds(53, 104, 140, 29);
+		panel_1.add(btnPreferredFoot);
+		
+		JButton btnClub = new JButton("Current Club");
+		btnClub.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String name = data.getName(0);
+				String club = data.getClub(0);
+				JOptionPane.showMessageDialog(null,name + " plays for " + club);
+				
+			}
+		});
+		btnClub.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnClub.setBounds(261, 104, 140, 29);
+		panel_1.add(btnClub);
+		
+		JButton btnHeight = new JButton("Height");
+		btnHeight.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String name = data.getName(0);
+				int height = data.getHeight(0);
+				JOptionPane.showMessageDialog(null,name + " is " + height + " CentiMetres tall");
+				
+			}
+		});
+		btnHeight.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnHeight.setBounds(53, 154, 140, 29);
+		panel_1.add(btnHeight);
+		
+		JButton btnPosition = new JButton("Position");
+		btnPosition.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String name = data.getName(0);
+				String position = data.getPosition(0);
+				JOptionPane.showMessageDialog(null,name + " plays as a " + position);
+				
+			}
+		});
+		btnPosition.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnPosition.setBounds(261, 154, 140, 29);
+		panel_1.add(btnPosition);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				panel.setVisible(true);
+				panel_1.setVisible(false);
+				
+			}
+		});
+		btnBack.setBounds(6, 243, 117, 29);
+		panel_1.add(btnBack);
+		
+		JButton btnNewButton = new JButton("Kit Number");
+		btnNewButton.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String name = data.getName(0);
+				int kitNumber = data.getKitNumber(0);
+				JOptionPane.showMessageDialog(null,name + " wears the number " + kitNumber);
+				
+			}
+		});
+		btnNewButton.setBounds(165, 204, 140, 29);
+		panel_1.add(btnNewButton);
+	}
+}
+
+package CSVData;
+
+import java.awt.EventQueue;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JButton;
+
+import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JLabel;
+import java.awt.Color;
+
+public class Frame1 {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Frame1 window = new Frame1();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	public void Frame1() {
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Frame1 window = new Frame1();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Frame1() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.DARK_GRAY);
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JButton btnClickToStart = new JButton("Click To Start");
+		btnClickToStart.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnClickToStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+						Frames move = new Frames();
+						move.Frames();
+			}
+						
+		});
+		btnClickToStart.setBounds(9, 39, 223, 87);
+		frame.getContentPane().add(btnClickToStart);
+		
+		JLabel label = new JLabel("");
+		Image premierLeague = new ImageIcon(this.getClass().getResource("/PremierLeague.jpg")).getImage();
+		label.setIcon(new ImageIcon(premierLeague));
+		label.setBounds(244, 39, 200, 200);
+		frame.getContentPane().add(label);
+		
+		JButton btnHowToPlay = new JButton("See How to Play");
+		btnHowToPlay.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnHowToPlay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				HowToPlay play = new HowToPlay();
+				play.HowToPlay();
+				
+			}
+		});
+		btnHowToPlay.setBounds(6, 152, 226, 87);
+		frame.getContentPane().add(btnHowToPlay);
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				FirstOption play = new FirstOption();
+				play.FirstOption();
+				
+			}
+		});
+		btnBack.setBounds(327, 251, 117, 29);
+		frame.getContentPane().add(btnBack);
+	}
+}
+
+package CSVData;
+
+import java.awt.EventQueue;
+import java.awt.Font;
+
+import javax.swing.JFrame;
+import javax.swing.JButton;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JLabel;
+
+import java.awt.Color;
+import javax.swing.SwingConstants;
+
+public class HowToPlay {
+
+	private JFrame frame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void HowToPlay() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					HowToPlay window = new HowToPlay();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public HowToPlay() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.DARK_GRAY);
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JButton btnStartPlaying = new JButton("Start Playing");
+		btnStartPlaying.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnStartPlaying.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Frame1 come = new Frame1();
+				come.Frame1();
+				
+			}
+		});
+		btnStartPlaying.setBounds(240, 179, 184, 68);
+		frame.getContentPane().add(btnStartPlaying);
+		
+		JLabel lblThinkOfA = new JLabel("1) Think of a player");
+		lblThinkOfA.setForeground(Color.WHITE);
+		lblThinkOfA.setBounds(55, 56, 130, 16);
+		frame.getContentPane().add(lblThinkOfA);
+		
+		JLabel lblIWill = new JLabel("2) I will try to guess it in as few guesses possible");
+		lblIWill.setForeground(Color.WHITE);
+		lblIWill.setBounds(55, 84, 321, 16);
+		frame.getContentPane().add(lblIWill);
+		
+		JLabel lblTheMore = new JLabel("3) The more guesses I take, the higher your score");
+		lblTheMore.setForeground(Color.WHITE);
+		lblTheMore.setBounds(55, 112, 331, 16);
+		frame.getContentPane().add(lblTheMore);
+		
+		JLabel lblIfI = new JLabel("4) If I am unable to guess the player, you win the game");
+		lblIfI.setForeground(Color.WHITE);
+		lblIfI.setBounds(55, 140, 369, 16);
+		frame.getContentPane().add(lblIfI);
+		
+		JLabel lblIRecommendYou = new JLabel("I recommend you check our \"Player information\" before proceeding");
+		lblIRecommendYou.setHorizontalAlignment(SwingConstants.CENTER);
+		lblIRecommendYou.setForeground(Color.WHITE);
+		lblIRecommendYou.setBounds(6, 6, 438, 16);
+		frame.getContentPane().add(lblIRecommendYou);
+		
+		JButton btnPlayerInformation = new JButton("Player Information");
+		btnPlayerInformation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Information move = new Information();
+				move.Information();
+				
+			}
+		});
+		btnPlayerInformation.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnPlayerInformation.setBounds(29, 179, 184, 68);
+		frame.getContentPane().add(btnPlayerInformation);
+	}
+}
+
+package CSVData;
+
+public class PlayerRecord {
+	
+	private int age, height, kitNumber;
+	private String name, position, nationality, foot, clubName;
+	
+	public PlayerRecord(int age, int height, String name, String position,
+			String nationality, String foot, String clubName, int kitNumber) {
+
+		this.age = age;
+		this.height = height;
+		this.name = name;
+		this.position = position;
+		this.nationality = nationality;
+		this.foot = foot;
+		this.clubName = clubName;
+		this.kitNumber = kitNumber;
+		
+	}
+	
+	public int getKitNumber() {
+		return kitNumber;
+	}
+
+	public int getAge() {
+		return age;
+	}
+	
+	public int getHeight() {
+		return height;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	
+	public String getPosition() {
+		return position;
+	}
+	
+	public String getNationality() {
+		return nationality;
+	}
+	
+	
+	public String getFoot() {
+		return foot;
+	}
+	
+	public String getClubName() {
+		return clubName;
+	}
+	
+}
+
+package CSVData;
+
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+
+public class PlayerData {
+
+	private ArrayList<PlayerRecord> records;
+	
+	public PlayerData(){
+		
+		records = new ArrayList<PlayerRecord>();
+		
+	}
+	
+	void loadDataFromFile(String string) {
+		try{
+			
+		Scanner read = new Scanner(new FileReader("/Users/RusheelIyer/Desktop/Data.csv"));	
+		
+		String line;
+		PlayerRecord record;
+		
+		read.nextLine();
+		while(read.hasNextLine()){
+			line = read.nextLine();
+			String[] results = line.split(",");
+			
+			String name = results[0];
+			int age = Integer.parseInt(results[1]);
+			String position = results[2];
+			String nationality = results[3];
+			String foot = results[4];
+			String clubName = results[5];
+			int height = Integer.parseInt(results[6]);
+			int kitNumber = Integer.parseInt(results[7]);
+			
+			record = new PlayerRecord(age, height, name, position, nationality, foot, clubName, kitNumber);
+			
+			records.add(record);
+		}
+		read.close();
+		}catch(Exception e){
+			
+			JOptionPane.showMessageDialog(null, e);
+			
+		}
+		
+	}
+
+	public String getName(int i) {
+		return records.get(i).getName();	
+	}
+
+	public void remove(int i) {
+		records.remove(i);
+	}
+
+	public int size() {
+		return (records.size())-1;
+	}
+
+	public String getFoot(int i) {
+		return records.get(i).getFoot();
+	}
+
+	public int getAge(int i) {
+		return records.get(i).getAge();
+	}
+
+	public String getNationality(int i) {
+		return records.get(i).getNationality();
+	}
+
+	public String getPosition(int i) {
+		return records.get(i).getPosition();
+	}
+
+	public String getClub(int i) {
+		return records.get(i).getClubName();
+	}
+
+	public int getHeight(int i) {
+		return records.get(i).getHeight();
+	}
+
+	public int getKitNumber(int i) {
+		return records.get(i).getKitNumber();
+	}
+	
+}
+
+package CSVData;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+
+import java.awt.CardLayout;
+
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Random;
+
+import javax.swing.JTextField;
+import java.awt.Font;
+
+public class Frames {
+
+	private JFrame frame;
+	private JPanel panel;
+	private JPanel panel_1;
+	private JPanel panel_2;
+	private JPanel panel_3;
+	private JPanel panel_4;
+	private JPanel panel_5;
+	private JPanel panel_6;
+	private JPanel panel_7;
+	private JPanel panel_8;
+	private JPanel panel_9;
+	private JPanel panel_10;
+	private JPanel panel_11;
+	private JPanel panel_12;
+	private JPanel panel_13;
+	private JPanel panel_14;
+	private JPanel panel_15;
+	private JPanel panel_16;
+	private JPanel panel_17;
+	private JTextField textField;
+	private JTextField textField_1;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void Frames() {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Frames window = new Frames();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public Frames() {
+		initialize();
+		
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	
+	private void initialize() {
+		
+		PlayerData data = new PlayerData();
+		data.loadDataFromFile("/Users/RusheelIyer/Desktop/Data.csv");
+		
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(new CardLayout(0, 0));
+		
+		final JPanel panel = new JPanel();
+		panel.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel, "name_55716022114186");
+		panel.setLayout(null);
+		panel.setVisible(true);
+		
+		final JPanel panel_1 = new JPanel();
+		panel_1.setForeground(Color.WHITE);
+		panel_1.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_1, "name_58006466630016");
+		panel_1.setLayout(null);
+		panel_1.setVisible(false);
+		
+		final JPanel panel_2 = new JPanel();
+		panel_2.setForeground(Color.WHITE);
+		panel_2.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_2, "name_129281011938603");
+		panel_2.setLayout(null);
+		panel_2.setVisible(false);
+		
+		final JPanel panel_3 = new JPanel();
+		panel_3.setForeground(Color.WHITE);
+		panel_3.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_3, "name_130196276634584");
+		panel_3.setLayout(null);
+		panel_3.setVisible(false);
+		
+		final JPanel panel_4 = new JPanel();
+		panel_4.setForeground(Color.WHITE);
+		panel_4.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_4, "name_12800846430570");
+		panel_4.setLayout(null);
+		
+		JLabel question5club = new JLabel("New Label");
+		question5club.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		question5club.setHorizontalAlignment(SwingConstants.CENTER);
+		question5club.setForeground(Color.WHITE);
+		question5club.setBounds(94, 77, 260, 16);
+		panel_4.add(question5club);
+		
+		final JPanel panel_5 = new JPanel();
+		panel_5.setForeground(Color.WHITE);
+		panel_5.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_5, "name_13247110048532");
+		panel_5.setLayout(null);
+		
+		JLabel question6position = new JLabel("New Label");
+		question6position.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		question6position.setHorizontalAlignment(SwingConstants.CENTER);
+		question6position.setForeground(Color.WHITE);
+		question6position.setBounds(94, 77, 260, 16);
+		panel_5.add(question6position);
+		
+		final JPanel panel_6 = new JPanel();
+		panel_6.setForeground(Color.WHITE);
+		panel_6.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_6, "name_113307038580631");
+		panel_6.setLayout(null);
+		panel_6.setVisible(false);
+		
+		JLabel question7height = new JLabel("Is your player 180 cms or taller?");
+		question7height.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		question7height.setHorizontalAlignment(SwingConstants.CENTER);
+		question7height.setForeground(Color.WHITE);
+		question7height.setBounds(94, 77, 260, 16);
+		panel_6.add(question7height);
+		
+		final JPanel panel_7 = new JPanel();
+		panel_7.setForeground(Color.WHITE);
+		panel_7.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_7, "name_49822954624481");
+		panel_7.setLayout(null);
+		
+		JLabel question8nationality = new JLabel("Nationality");
+		question8nationality.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		question8nationality.setHorizontalAlignment(SwingConstants.CENTER);
+		question8nationality.setForeground(Color.WHITE);
+		question8nationality.setBounds(94, 77, 260, 16);
+		panel_7.add(question8nationality);
+		
+		final JPanel panel_8 = new JPanel();
+		panel_8.setForeground(Color.WHITE);
+		panel_8.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_8, "name_50444529622483");
+		panel_8.setLayout(null);
+		
+		JLabel question9club = new JLabel("Club");
+		question9club.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		question9club.setHorizontalAlignment(SwingConstants.CENTER);
+		question9club.setForeground(Color.WHITE);
+		question9club.setBounds(94, 77, 301, 16);
+		panel_8.add(question9club);
+		panel_8.setVisible(false);
+		
+		final JPanel panel_9 = new JPanel();
+		panel_9.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_9, "name_69048314541166");
+		panel_9.setLayout(null);
+		
+		JLabel question10position = new JLabel("Position");
+		question10position.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		question10position.setHorizontalAlignment(SwingConstants.CENTER);
+		question10position.setForeground(Color.WHITE);
+		question10position.setBounds(94, 77, 260, 16);
+		panel_9.add(question10position);
+		panel_9.setVisible(false);
+		
+		final JPanel panel_10 = new JPanel();
+		panel_10.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_10, "name_70269795436414");
+		panel_10.setLayout(null);
+		
+		JLabel question11nationality = new JLabel("Nation");
+		question11nationality.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		question11nationality.setHorizontalAlignment(SwingConstants.CENTER);
+		question11nationality.setForeground(Color.WHITE);
+		question11nationality.setBounds(94, 77, 260, 16);
+		panel_10.add(question11nationality);
+		
+		final JPanel panel_11 = new JPanel();
+		panel_11.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_11, "name_114169450043461");
+		panel_11.setLayout(null);
+		
+		JLabel question12club = new JLabel("Club");
+		question12club.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		question12club.setHorizontalAlignment(SwingConstants.CENTER);
+		question12club.setForeground(Color.WHITE);
+		question12club.setBounds(94, 77, 260, 16);
+		panel_11.add(question12club);
+		
+		final JPanel panel_12 = new JPanel();
+		panel_12.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_12, "name_17272440659429");
+		panel_12.setLayout(null);
+		
+		JLabel question13kit = new JLabel("Kit Number");
+		question13kit.setHorizontalAlignment(SwingConstants.CENTER);
+		question13kit.setForeground(Color.WHITE);
+		question13kit.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		question13kit.setBounds(94, 77, 260, 16);
+		panel_12.add(question13kit);
+		
+		final JPanel panel_13 = new JPanel();
+		panel_13.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_13, "name_18849655747463");
+		panel_13.setLayout(null);
+		
+		JLabel question14club = new JLabel("Club");
+		question14club.setHorizontalAlignment(SwingConstants.CENTER);
+		question14club.setForeground(Color.WHITE);
+		question14club.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		question14club.setBounds(94, 77, 260, 16);
+		panel_13.add(question14club);
+		
+		final JPanel panel_14 = new JPanel();
+		panel_14.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_14, "name_19751331784586");
+		panel_14.setLayout(null);
+		
+		JLabel lblEnterYourPlayers = new JLabel("Enter Your Players Kit Number:");
+		lblEnterYourPlayers.setHorizontalAlignment(SwingConstants.CENTER);
+		lblEnterYourPlayers.setForeground(Color.WHITE);
+		lblEnterYourPlayers.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		lblEnterYourPlayers.setBounds(93, 77, 260, 16);
+		panel_14.add(lblEnterYourPlayers);
+		
+		textField_1 = new JTextField();
+		textField_1.setBounds(157, 128, 134, 28);
+		panel_14.add(textField_1);
+		textField_1.setColumns(10);
+		panel_14.setVisible(false);
+		
+		final JPanel panel_15 = new JPanel();
+		panel_15.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_15, "name_22543364131282");
+		panel_15.setLayout(null);
+		
+		JLabel question16club = new JLabel("Club");
+		question16club.setHorizontalAlignment(SwingConstants.CENTER);
+		question16club.setForeground(Color.WHITE);
+		question16club.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		question16club.setBounds(94, 77, 260, 16);
+		panel_15.add(question16club);
+		
+		final JPanel panel_16 = new JPanel();
+		panel_16.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_16, "name_114804395460915");
+		panel_16.setLayout(null);
+		panel_16.setVisible(false);
+		
+		final JPanel panel_17 = new JPanel();
+		panel_17.setBackground(Color.DARK_GRAY);
+		frame.getContentPane().add(panel_17, "name_88364990094212");
+		panel_17.setLayout(null);
+		panel_17.setVisible(false);
+		
+		JLabel lblNewLabel = new JLabel("Want us to add a player to our database? Type the name below: ");
+		lblNewLabel.setForeground(Color.WHITE);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(22, 77, 422, 16);
+		panel_17.add(lblNewLabel);
+		
+		textField = new JTextField();
+		textField.setBounds(130, 120, 200, 50);
+		panel_17.add(textField);
+		textField.setColumns(10);
+		
+		JButton btnPlayAgain = new JButton("Play Again");
+		btnPlayAgain.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnPlayAgain.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				Frame1 come = new Frame1();
+				come.Frame1();
+				
+			}
+		});
+		btnPlayAgain.setBounds(6, 243, 117, 29);
+		panel_17.add(btnPlayAgain);
+		
+		JLabel label = new JLabel("Was It One Of Those?");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setForeground(Color.WHITE);
+		label.setBounds(94, 77, 260, 16);
+		panel_16.add(label);
+		
+		JLabel question4position = new JLabel("New Label");
+		question4position.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		question4position.setHorizontalAlignment(SwingConstants.CENTER);
+		question4position.setForeground(Color.WHITE);
+		question4position.setBounds(94, 77, 260, 16);
+		panel_3.add(question4position);
+		
+		JLabel question3nation = new JLabel("");
+		question3nation.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		question3nation.setForeground(Color.WHITE);
+		question3nation.setHorizontalAlignment(SwingConstants.CENTER);
+		question3nation.setBounds(94, 77, 260, 16);
+		panel_2.add(question3nation);
+		
+		JButton btnNo = new JButton("Right");
+		btnNo.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getFoot(i).equals("L")){
+						data.remove(i);
+					}else{
+						continue;
+					} 
+						
+				}	check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 1 try");
+					panel_17.setVisible(true);
+					panel.setVisible(false);
+				}else{
+					
+					panel_1.setVisible(true);
+					panel.setVisible(false);
+					
+				}
+			}
+		});
+		btnNo.setBounds(237, 128, 117, 29);
+		panel.add(btnNo);
+		
+		JLabel question1foot = new JLabel("Is your player Left or Right Footed?");
+		question1foot.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		question1foot.setForeground(Color.WHITE);
+		question1foot.setHorizontalAlignment(SwingConstants.CENTER);
+		question1foot.setBounds(94, 77, 260, 16);
+		panel.add(question1foot);
+		
+		JButton btnNewButton = new JButton("Left");
+		btnNewButton.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getFoot(i).equals("L")){
+						continue;
+					}else{
+						data.remove(i);
+					} 
+					
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 1 try");
+					panel_17.setVisible(true);
+					panel.setVisible(false);
+				}else{
+					
+					panel_1.setVisible(true);
+					panel.setVisible(false);
+					
+				}	
+			}
+		});
+		btnNewButton.setBounds(86, 128, 117, 29);
+		panel.add(btnNewButton);
+		
+		JLabel question2age = new JLabel("Is your player 30 years or older?");
+		question2age.setFont(new Font("Avenir Next Condensed", Font.BOLD | Font.ITALIC, 14));
+		question2age.setForeground(Color.WHITE);
+		question2age.setHorizontalAlignment(SwingConstants.CENTER);
+		question2age.setBounds(94, 77, 260, 16);
+		panel_1.add(question2age);
+		
+		JButton btnShow = new JButton("Yes");
+		btnShow.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnShow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getAge(i) >= 30){
+						continue;
+					}else{
+						data.remove(i);
+					} 
+					
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 2 tries");
+					panel_17.setVisible(true);
+					panel_1.setVisible(false);
+				}else{
+					
+					panel_2.setVisible(true);
+					panel_1.setVisible(false);
+					
+					question3nation.setText("Is your player from " + data.getNationality(0) + "?");
+					
+				}	
+			}
+		});
+		btnShow.setBounds(86, 128, 117, 29);
+		panel_1.add(btnShow);
+		
+		JButton btnNo_1 = new JButton("No");
+		btnNo_1.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNo_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getAge(i) >= 30){
+						data.remove(i);
+					}else{
+						continue;
+					} 
+					
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 2 tries");
+					panel_17.setVisible(true);
+					panel_1.setVisible(false);
+				}else{
+					
+					panel_2.setVisible(true);
+					panel_1.setVisible(false);
+					
+					question3nation.setText("Is your player from " + data.getNationality(0) + "?");
+				}	
+			}
+		});
+		btnNo_1.setBounds(237, 128, 117, 29);
+		panel_1.add(btnNo_1);
+		
+		JButton btnYes = new JButton("Yes");
+		btnYes.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnYes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String nationality = data.getNationality(0);
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getNationality(i).equals(question3nation.getText().substring(20,
+							(question3nation.getText().length()) - 1))){
+						continue;
+					}else{
+						data.remove(i);
+					} 
+					
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 3 tries");
+					panel_17.setVisible(true);
+					panel_2.setVisible(false);
+				}else{
+					
+					panel_3.setVisible(true);
+					panel_2.setVisible(false);
+					
+					question4position.setText("Is your player a " + data.getPosition(0) + "?");
+				}	
+			}
+		});
+		btnYes.setBounds(86, 128, 117, 29);
+		panel_2.add(btnYes);
+		
+		JButton btnNo_2 = new JButton("No");
+		btnNo_2.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNo_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getNationality(i).equals(question3nation
+							.getText().substring(20, (question3nation.getText().length()) - 1))){
+						data.remove(i);
+					}else{
+						continue;
+					} 
+					
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 3 tries");
+					panel_17.setVisible(true);
+					panel_2.setVisible(false);
+				}else{
+					
+					panel_3.setVisible(true);
+					panel_2.setVisible(false);
+					
+					question4position.setText("Is your player a " + data.getPosition(0) + "?");
+				}	
+			}
+		});
+		btnNo_2.setBounds(237, 128, 117, 29);
+		panel_2.add(btnNo_2);
+		panel_2.setVisible(false);
+		
+		JButton btnYes_1 = new JButton("Yes");
+		btnYes_1.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnYes_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getPosition(i).equals(question4position
+							.getText().substring(17, (question4position.getText().length()) - 1))){
+						continue;
+					}else{
+						data.remove(i);
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 4 tries");
+					panel_17.setVisible(true);
+					panel_3.setVisible(false);
+				}else{
+					
+					panel_4.setVisible(true);
+					panel_3.setVisible(false);
+					
+					question5club.setText("Does he play for " + data.getClub(0) + "?");
+				}	
+			}
+		});
+		btnYes_1.setBounds(86, 128, 117, 29);
+		panel_3.add(btnYes_1);
+		
+		JButton btnNo_3 = new JButton("No");
+		btnNo_3.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNo_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getPosition(i).equals(question4position.getText().substring(17, (question4position.getText().length()) - 1))){
+						data.remove(i);
+					}else{
+						continue;
+					} 
+					
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 4 tries");
+					panel_17.setVisible(true);
+					panel_3.setVisible(false);
+				}else{
+					
+					panel_4.setVisible(true);
+					panel_3.setVisible(false);
+					
+					question5club.setText("Does he play for " + data.getClub(0) + "?");
+				}	
+			}
+		});
+		btnNo_3.setBounds(237, 128, 117, 29);
+		panel_3.add(btnNo_3);
+		
+		JButton button = new JButton("Yes");
+		button.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = (data.size()); i >= 0; i--){
+					
+					if(data.getClub(i).equals(question5club.getText().substring(
+							17, (question5club.getText().length()) - 1))){
+						continue;
+					}else{
+						data.remove(i);
+					}
+					
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 5 tries");
+					
+					panel_17.setVisible(true);
+					panel_4.setVisible(false);
+				}else{
+					
+					panel_5.setVisible(true);
+					panel_4.setVisible(false);
+					
+					question6position.setText("Is your player a " + data.getPosition(0) + "?");
+				}	
+			}
+		});
+		button.setBounds(86, 128, 117, 29);
+		panel_4.add(button);
+		
+		JButton button_1 = new JButton("No");
+		button_1.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String club = data.getClub(0);
+				for(int i = (data.size()); i >= 0; i--){
+					
+					if(data.getClub(i).equals(question5club
+							.getText().substring(17, (question5club.getText().length()) - 1))){
+						data.remove(i);
+					}else{
+						continue;
+					} 
+					
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 5 tries");
+					
+					panel_17.setVisible(true);
+					panel_4.setVisible(false);
+				}else{
+					
+					panel_5.setVisible(true);
+					panel_4.setVisible(false);
+					
+					question6position.setText("Is your player a " + data.getPosition(0) + "?");
+				}	
+			}
+		});
+		button_1.setBounds(237, 128, 117, 29);
+		panel_4.add(button_1);
+		panel_4.setVisible(false);
+		
+		JButton button_2 = new JButton("Yes");
+		button_2.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getPosition(i).equals(question6position.
+							getText().substring(17, (question6position.getText().length()) - 1))){
+						continue;
+					}else{
+						data.remove(i);
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 6 tries");
+					
+					panel_17.setVisible(true);
+					panel_5.setVisible(false);
+				}else{
+					
+					panel_6.setVisible(true);
+					panel_5.setVisible(false);
+					
+				}	
+			}
+		});
+		button_2.setBounds(86, 128, 117, 29);
+		panel_5.add(button_2);
+		
+		JButton button_3 = new JButton("No");
+		button_3.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		button_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getPosition(i).equals(question6position
+							.getText().substring(17, (question6position.getText().length()) - 1))){
+						data.remove(i);
+					}else{
+						continue;
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 6 tries");
+					
+					panel_17.setVisible(true);
+					panel_5.setVisible(false);
+				}else{
+					
+					panel_6.setVisible(true);
+					panel_5.setVisible(false);
+					
+				}	
+			}
+		});
+		button_3.setBounds(237, 128, 117, 29);
+		panel_5.add(button_3);
+		
+		JButton button_4 = new JButton("Yes");
+		button_4.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		button_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getHeight(i) >= 180){
+						continue;
+					}else{
+						data.remove(i);
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 7 tries");
+					
+					panel_17.setVisible(true);
+					panel_6.setVisible(false);
+				}else{
+					
+					panel_7.setVisible(true);
+					panel_6.setVisible(false);
+					
+					question8nationality.setText("Is your player from " + data.getNationality(0) + "?");
+				}	
+			}
+		});
+		button_4.setBounds(86, 128, 117, 29);
+		panel_6.add(button_4);
+		
+		JButton btnNo_4 = new JButton("No");
+		btnNo_4.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNo_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getHeight(i) >= 180){
+						data.remove(i);
+					}else{
+						continue;
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 7 tries");
+					
+					panel_17.setVisible(true);
+					panel_6.setVisible(false);
+				}else{
+					
+					panel_7.setVisible(true);
+					panel_6.setVisible(false);
+
+					question8nationality.setText("Is your player from " + data.getNationality(0) + "?");
+				}	
+			}
+		});
+		btnNo_4.setBounds(237, 128, 117, 29);
+		panel_6.add(btnNo_4);
+		
+		JButton button_5 = new JButton("Yes");
+		button_5.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		button_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getNationality(i).equals(question8nationality
+							.getText().substring(20, (question8nationality.getText().length()) - 1))){
+						continue;
+					}else{
+						data.remove(i);
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 8 tries");
+					
+					panel_17.setVisible(true);
+					panel_7.setVisible(false);
+				}else{
+					
+					panel_8.setVisible(true);
+					panel_7.setVisible(false);
+ 
+					question9club.setText("Does he play for " + data.getClub(0) + "?");
+				}	
+			}
+		});
+		button_5.setBounds(86, 128, 117, 29);
+		panel_7.add(button_5);
+		
+		JButton button_6 = new JButton("No");
+		button_6.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		button_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getNationality(i).equals(question8nationality
+							.getText().substring(20, (question8nationality.getText().length()) - 1))){
+						data.remove(i);
+					}else{
+						continue;
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 8 tries");
+					
+					panel_17.setVisible(true);
+					panel_7.setVisible(false);
+				}else{
+					
+					panel_8.setVisible(true);
+					panel_7.setVisible(false);
+					
+					question9club.setText("Does he play for " + data.getClub(0) + "?");
+				}	
+			}
+		});
+		button_6.setBounds(237, 128, 117, 29);
+		panel_7.add(button_6);
+		
+		JButton button_7 = new JButton("Yes");
+		button_7.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		button_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getClub(i).equals(question9club
+							.getText().substring(17, (question9club.getText().length()) - 1))){
+						continue;
+					}else{
+						data.remove(i);
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 9 tries");
+					
+					panel_17.setVisible(true);
+					panel_8.setVisible(false);
+				}else{
+					
+					panel_9.setVisible(true);
+					panel_8.setVisible(false);
+					 
+					question10position.setText("Is your player a " + data.getPosition(0) + "?");
+				}	
+			}
+		});
+		button_7.setBounds(86, 128, 117, 29);
+		panel_8.add(button_7);
+		
+		JButton btnNo_5 = new JButton("No");
+		btnNo_5.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNo_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getClub(i).equals(question9club
+							.getText().substring(17, (question9club.getText().length()) - 1))){
+						data.remove(i);
+					}else{
+						continue;
+					} 
+					
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 9 tries");
+					
+					panel_17.setVisible(true);
+					panel_8.setVisible(false);
+				}else{
+					
+					panel_9.setVisible(true);
+					panel_8.setVisible(false);
+					
+					question10position.setText("Is your player a " + data.getPosition(0) + "?");
+				}	
+			}
+		});
+		btnNo_5.setBounds(237, 128, 117, 29);
+		panel_8.add(btnNo_5);
+		
+		JButton btnNewButton_1 = new JButton("Yes");
+		btnNewButton_1.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+		
+					int length = (question10position.getText().length()) - 1;
+					if(data.getPosition(i).equals(question10position.getText().substring(17, length))){
+						continue;
+					}else{
+						data.remove(i);
+					} 
+					
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 10 tries");
+					
+					panel_17.setVisible(true);
+					panel_9.setVisible(false);
+				}else{
+					
+					panel_10.setVisible(true);
+					panel_9.setVisible(false);
+					
+					question11nationality.setText("Is your player from " + data.getNationality(0) + "?");
+				}	
+			}
+		});
+		btnNewButton_1.setBounds(86, 128, 117, 29);
+		panel_9.add(btnNewButton_1);
+		
+		JButton btnNo_6 = new JButton("No");
+		btnNo_6.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNo_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					int length = (question10position.getText().length()) - 1;
+					if(data.getPosition(i).equals(question10position.getText().substring(17,length))){
+						data.remove(i);
+					}else{
+						continue;
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 10 tries");
+					
+					panel_17.setVisible(true);
+					panel_9.setVisible(false);
+				}else{
+					
+					panel_10.setVisible(true);
+					panel_9.setVisible(false);
+					
+					question11nationality.setText("Is your player from " + data.getNationality(0) + "?");
+				}	
+			}
+		});
+		btnNo_6.setBounds(237, 128, 117, 29);
+		panel_9.add(btnNo_6);
+		
+		JButton btnYes_2 = new JButton("Yes");
+		btnYes_2.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnYes_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getNationality(i).equals(question11nationality.getText().substring(
+							20, (question11nationality.getText().length()) - 1))){
+						continue;
+					}else{
+						data.remove(i);
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 11 tries");
+					
+					panel_17.setVisible(true);
+					panel_10.setVisible(false);
+				}else{
+					
+					panel_11.setVisible(true);
+					panel_10.setVisible(false);
+					
+					question12club.setText("Does he play for " + data.getClub(0) +"?");
+				}	
+			}
+		});
+		btnYes_2.setBounds(86, 128, 117, 29);
+		panel_10.add(btnYes_2);
+		
+		JButton btnNo_7 = new JButton("No");
+		btnNo_7.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNo_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getNationality(i).equals(question11nationality
+							.getText().substring(20, (question11nationality.getText().length()) - 1))){
+						data.remove(i);
+					}else{
+						continue;
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 11 tries");
+					
+					panel_17.setVisible(true);
+					panel_10.setVisible(false);
+				}else{
+					
+					panel_11.setVisible(true);
+					panel_10.setVisible(false);
+					
+					question12club.setText("Does he play for " + data.getClub(0) +"?");
+				}	
+			}
+		});
+		btnNo_7.setBounds(237, 128, 117, 29);
+		panel_10.add(btnNo_7);
+		
+		JButton btnYes_3 = new JButton("Yes");
+		btnYes_3.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnYes_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getClub(i).equals(question12club.getText().substring(17, (question12club.getText().length()) - 1))){
+						continue;
+					}else{
+						data.remove(i);
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 12 tries");
+					
+					panel_17.setVisible(true);
+					panel_11.setVisible(false);
+				}else{
+					
+					panel_12.setVisible(true);
+					panel_11.setVisible(false);
+					
+					question13kit.setText("Does your player wear the kit number: " + data.getKitNumber(0) + "?");
+				}
+			}	
+
+		});
+		btnYes_3.setBounds(86, 128, 117, 29);
+		panel_11.add(btnYes_3);
+		
+		JButton btnNo_8 = new JButton("No");
+		btnNo_8.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNo_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getClub(i).equals(question12club.getText().substring(17, (question12club.getText().length()) - 1))){
+						data.remove(i);
+					}else{
+						continue;
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 12 tries");
+					
+					panel_17.setVisible(true);
+					panel_11.setVisible(false);
+				}else{
+					
+					panel_12.setVisible(true);
+					panel_11.setVisible(false);
+					
+					question13kit.setText("Does your player wear the number: " + data.getKitNumber(0) + "?");
+				}	
+			}	
+
+		});
+		btnNo_8.setBounds(237, 128, 117, 29);
+		panel_11.add(btnNo_8);
+		
+		JButton button_8 = new JButton("Yes");
+		button_8.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(Integer.parseInt(question13kit.getText().substring(34,(question13kit.getText().length()) - 1)) 
+							== data.getKitNumber(i)){
+						continue;
+					}else{
+						data.remove(i);
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 13 tries");
+					
+					panel_17.setVisible(true);
+					panel_12.setVisible(false);
+				}else{
+					
+					panel_13.setVisible(true);
+					panel_12.setVisible(false);
+
+					question14club.setText("Does he play for " + data.getClub(0) + "?");
+				}	
+			}	
+
+		});
+		button_8.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		button_8.setBounds(86, 128, 117, 29);
+		panel_12.add(button_8);
+		
+		JButton btnNo_10 = new JButton("No");
+		btnNo_10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(Integer.parseInt(question13kit.getText().substring(34,(question13kit.getText().length()) - 1)) 
+							== data.getKitNumber(i)){
+						data.remove(i);
+					}else{
+						continue;
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 13 tries");
+					
+					panel_17.setVisible(true);
+					panel_12.setVisible(false);
+				}else{
+					
+					panel_13.setVisible(true);
+					panel_12.setVisible(false);
+
+					question14club.setText("Does he play for " + data.getClub(0) + "?");
+				}	
+			}	
+
+		});
+		btnNo_10.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNo_10.setBounds(237, 128, 117, 29);
+		panel_12.add(btnNo_10);
+		
+		JButton button_9 = new JButton("Yes");
+		button_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getClub(i).equals(question14club.getText().substring(17, (question14club.getText().length()) - 1))){
+						continue;
+					}else{
+						data.remove(i);
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 14 tries");
+					
+					panel_17.setVisible(true);
+					panel_13.setVisible(false);
+				}else{
+					
+					panel_14.setVisible(true);
+					panel_13.setVisible(false);
+					
+				}	
+			}	
+
+		});
+		button_9.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		button_9.setBounds(86, 128, 117, 29);
+		panel_13.add(button_9);
+		
+		JButton btnNo_11 = new JButton("No");
+		btnNo_11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getClub(i).equals(question14club.getText().substring(17, (question14club.getText().length()) - 1))){
+						data.remove(i);
+					}else{
+						
+						continue;
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 14 tries");
+					
+					panel_17.setVisible(true);
+					panel_13.setVisible(false);
+				}else{
+					
+					panel_14.setVisible(true);
+					panel_13.setVisible(false);
+					
+				}	
+			}	
+
+		});
+		btnNo_11.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNo_11.setBounds(237, 128, 117, 29);
+		panel_13.add(btnNo_11);
+		panel_13.setVisible(false);
+		
+		JButton btnDone = new JButton("Done");
+		btnDone.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					if(Integer.parseInt(textField_1.getText()) == data.getKitNumber(i)){
+						continue;
+					}else{
+						data.remove(i);
+					}
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 15 tries");
+					
+					panel_17.setVisible(true);
+					panel_14.setVisible(false);
+				}else{
+					
+					panel_15.setVisible(true);
+					panel_14.setVisible(false);
+					
+					question16club.setText("Does he play for " + data.getClub(0) + "?");
+				}	
+			}	
+
+		});
+		btnDone.setBounds(163, 243, 117, 29);
+		panel_14.add(btnDone);
+		
+		JButton btnYes_5 = new JButton("Yes");
+		btnYes_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getClub(i).equals(question16club.getText().substring(17, (question16club.getText().length()) - 1))){
+						continue;
+					}else{
+						data.remove(i);
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 16 tries");
+					
+					panel_17.setVisible(true);
+					panel_15.setVisible(false);
+				}else{
+					
+					LinkedList sad = new LinkedList();
+					JOptionPane.showMessageDialog(null, "Look at the following names: ");
+					for(int i = data.size(); i >= 0; i--){
+						sad.add(data.getName(i));
+					}
+					JOptionPane.showMessageDialog(null, sad);
+					
+					panel_16.setVisible(true);
+					panel_15.setVisible(false);
+					
+				}	
+			}	
+
+		});
+		btnYes_5.setBounds(86, 128, 117, 29);
+		panel_15.add(btnYes_5);
+		
+		JButton btnNo_12 = new JButton("No");
+		btnNo_12.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				for(int i = data.size(); i >= 0; i--){
+					
+					if(data.getClub(i).equals(question16club.getText().substring(17, (question16club.getText().length()) - 1))){
+						data.remove(i);
+					}else{
+						continue;
+					} 
+				}check(data);
+			}
+			private void check(PlayerData data) {
+				
+				if(data.size() == 0){
+					JOptionPane.showMessageDialog(null, "The player you are thinking of is: " + data.getName(0));
+					JOptionPane.showMessageDialog(null, "I managed to guess it in 16 tries");
+					
+					panel_17.setVisible(true);
+					panel_15.setVisible(false);
+				}else{
+					
+					LinkedList sad = new LinkedList();
+					JOptionPane.showMessageDialog(null, "Look at the following names: ");
+					for(int i = data.size(); i >= 0; i--){
+						sad.add(data.getName(i));
+					}
+					JOptionPane.showMessageDialog(null, sad);
+					
+					panel_16.setVisible(true);
+					panel_15.setVisible(false);
+					
+				}	
+			}	
+
+		});
+		btnNo_12.setBounds(237, 128, 117, 29);
+		panel_15.add(btnNo_12);
+		panel_15.setVisible(false);
+		
+		JButton btnYes_4 = new JButton("Yes");
+		btnYes_4.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnYes_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				JOptionPane.showMessageDialog(null, "Thank You\nYour Feedback is Appreciated :)");
+				panel_17.setVisible(true);
+				panel_16.setVisible(false);
+				
+			}
+		});
+		btnYes_4.setBounds(86, 128, 117, 29);
+		panel_16.add(btnYes_4);
+		
+		JButton btnNo_9 = new JButton("No");
+		btnNo_9.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnNo_9.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				panel_17.setVisible(true);
+				panel_16.setVisible(false);
+				
+			}
+		});
+		btnNo_9.setBounds(237, 128, 117, 29);
+		panel_16.add(btnNo_9);
+		
+		JButton btnQuit = new JButton("Quit");
+		btnQuit.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnQuit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				JOptionPane.showMessageDialog(null, "Thank you for playing!");
+				System.exit(0);
+			}
+		});
+		btnQuit.setBounds(327, 243, 117, 29);
+		panel_17.add(btnQuit);
+		
+		JButton btnAdd = new JButton("Add");
+		btnAdd.setFont(new Font("Franklin Gothic Medium", Font.BOLD, 16));
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					
+				File file = new File("/Users/RusheelIyer/Desktop/names.txt");
+				FileWriter playerName = new FileWriter(file.getAbsoluteFile(), true);	
+				playerName.write(textField.getText() + "\n");
+				playerName.close();
+				
+				JOptionPane.showMessageDialog(null, "Added. We will consider adding this player. Thank You!");
+				
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+				
+				
+			}
+
+		});
+		btnAdd.setBounds(169, 170, 117, 29);
+		panel_17.add(btnAdd);
+	}
+}
